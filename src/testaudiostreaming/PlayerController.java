@@ -37,6 +37,14 @@ public class PlayerController implements Initializable {
         // ??
         // create new player from given url
         mediaView = buildMediaView(field_url.getText());
+        // set all statusChanges to given method
+        setAllStatusChanges(mediaView.getMediaPlayer(), new Runnable() {
+
+            @Override
+            public void run() {
+                reloadStatus();
+            }
+        });
         // add player to scenegraph
         anchorPane.getChildren().add(mediaView);
     }
@@ -53,7 +61,7 @@ public class PlayerController implements Initializable {
     
     @FXML
     private void handleButtonZeigeStatus(ActionEvent event) {
-        status.setText(mediaView.getMediaPlayer().getStatus().toString());
+        reloadStatus();
     }
     
     private void setAllStatusChanges(MediaPlayer mediaPlayer, Runnable r){
@@ -129,5 +137,9 @@ public class PlayerController implements Initializable {
         }
         
         return tmpMediaView;
+    }
+
+    private void reloadStatus() {
+        status.setText(mediaView.getMediaPlayer().getStatus().toString());
     }
 }
