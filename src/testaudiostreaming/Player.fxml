@@ -17,5 +17,7 @@
     <Button fx:id="btn_status" layoutX="14.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleButtonShowStatus" text="Zeige Status" />
     <Text fx:id="status" layoutX="16.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status" />
     <Button layoutX="182.0" layoutY="79.0" mnemonicParsing="false" onAction="#handleButtonPause" text="Pause" />
+    <Button layoutX="138.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleButtonProperties" text="Zeige Properties" />
+    <Text fx:id="properties" layoutX="138.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Properties" />
   </children>
 </AnchorPane>

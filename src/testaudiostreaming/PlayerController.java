@@ -26,29 +26,43 @@ import javafx.scene.text.Text;
 public class PlayerController implements Initializable {
     
     @FXML private Text status;
+    @FXML private Text properties;
     @FXML private AnchorPane anchorPane;
     @FXML private TextField field_url;
     
     private MediaView mediaView;
     
     @FXML
+    private void handleButtonProperties(ActionEvent event){
+        Object object = mediaView.getMediaPlayer().getCurrentTime();
+        String string = "CurrentTime: " + (object == null ? "null" : object.toString());
+        System.out.println(string);
+        properties.setText(string);
+    }
+    
+    @FXML
     private void handleButtonLaden(ActionEvent event) {
-        // TODO: clean up current players
+        // clean up current players
         if(mediaView != null){
             mediaView.getMediaPlayer().stop();
             mediaView.setMediaPlayer(null);
             mediaView = null;
         }
+        
+        
         // create new player from given url
         mediaView = buildMediaView(field_url.getText());
+        
+        
         // set all statusChanges to given method
         setAllStatusChanges(mediaView.getMediaPlayer(), new Runnable() {
-
             @Override
             public void run() {
                 reloadStatus();
             }
         });
+        
+        
         // add player to scenegraph
         anchorPane.getChildren().add(mediaView);
     }
