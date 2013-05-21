@@ -34,7 +34,11 @@ public class PlayerController implements Initializable {
     @FXML
     private void handleButtonLaden(ActionEvent event) {
         // TODO: clean up current players
-        // ??
+        if(mediaView != null){
+            mediaView.getMediaPlayer().stop();
+            mediaView.setMediaPlayer(null);
+            mediaView = null;
+        }
         // create new player from given url
         mediaView = buildMediaView(field_url.getText());
         // set all statusChanges to given method
@@ -60,8 +64,13 @@ public class PlayerController implements Initializable {
     }
     
     @FXML
-    private void handleButtonZeigeStatus(ActionEvent event) {
+    private void handleButtonShowStatus(ActionEvent event) {
         reloadStatus();
+    }
+    
+    @FXML
+    private void handleButtonPause(ActionEvent event) {
+        mediaView.getMediaPlayer().pause();
     }
     
     private void setAllStatusChanges(MediaPlayer mediaPlayer, Runnable r){
