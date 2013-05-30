@@ -2,12 +2,14 @@
 
 <?import java.lang.*?>
 <?import java.util.*?>
+<?import javafx.collections.*?>
 <?import javafx.scene.*?>
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="200.00009999999747" prefWidth="379.0" xmlns:fx="http://javafx.com/fxml" fx:controller="testaudiostreaming.PlayerController">
+<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="346.0000999999975" prefWidth="379.0" xmlns:fx="http://javafx.com/fxml" fx:controller="testaudiostreaming.PlayerController">
   <children>
     <Button id="btn_laden" layoutX="14.0" layoutY="79.0" mnemonicParsing="false" onAction="#handleButtonLaden" text="Laden" />
     <Button fx:id="btn_abspielen" layoutX="85.0" layoutY="79.0" mnemonicParsing="false" onAction="#handleButtonAbspielen" text="Abspielen" />
@@ -19,5 +21,20 @@
     <Button layoutX="182.0" layoutY="79.0" mnemonicParsing="false" onAction="#handleButtonPause" text="Pause" />
     <Button layoutX="138.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleButtonProperties" text="Zeige Properties" />
     <Text fx:id="properties" layoutX="138.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Properties" />
+    <Slider fx:id="slider" layoutX="14.0" layoutY="170.0" prefWidth="292.0" />
+    <Button layoutX="263.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleButtonLeft" text="&lt;" />
+    <Button layoutX="296.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleButtonRight" text="&gt;" />
+    <AreaChart id="AreaChart" fx:id="chart" layoutX="16.0" layoutY="194.0" minHeight="139.0" prefHeight="139.0" prefWidth="313.0">
+      <xAxis>
+        <CategoryAxis side="BOTTOM">
+          <categories>
+            <FXCollections fx:factory="observableArrayList" />
+          </categories>
+        </CategoryAxis>
+      </xAxis>
+      <yAxis>
+        <NumberAxis side="LEFT" />
+      </yAxis>
+    </AreaChart>
   </children>
 </AnchorPane>
