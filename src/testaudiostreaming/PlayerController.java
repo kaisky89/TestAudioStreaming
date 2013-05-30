@@ -6,11 +6,15 @@ package testaudiostreaming;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.AreaChart;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
@@ -18,6 +22,7 @@ import javafx.scene.media.MediaErrorEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 /**
  *
@@ -29,13 +34,32 @@ public class PlayerController implements Initializable {
     @FXML private Text properties;
     @FXML private AnchorPane anchorPane;
     @FXML private TextField field_url;
+    @FXML private Slider slider;
+    @FXML private AreaChart chart;
     
     private MediaView mediaView;
     
+    
+    @FXML
+    private void handleButtonLeft(ActionEvent event){
+        Duration currentDuration = mediaView.getMediaPlayer().getCurrentTime();
+        //Duration newDuration = currentDuration.add(Duration.seconds(-10.0));
+        Duration newDuration = new Duration(-1000.0);
+        mediaView.getMediaPlayer().seek(newDuration);
+    }
+    
+    @FXML
+    private void handleButtonRight(ActionEvent event){
+        Duration currentDuration = mediaView.getMediaPlayer().getCurrentTime();
+        Duration newDuration = currentDuration.add(Duration.seconds(10.0));
+        mediaView.getMediaPlayer().seek(newDuration);
+    }
+    
     @FXML
     private void handleButtonProperties(ActionEvent event){
-        Object object = mediaView.getMediaPlayer().getCurrentTime();
-        String string = "CurrentTime: " + (object == null ? "null" : object.toString());
+        Object object = mediaView.getMediaPlayer().getMedia().durationProperty();
+        
+        String string = "media.keySet: " + (object == null ? "null" : object.toString());
         System.out.println(string);
         properties.setText(string);
     }
@@ -59,6 +83,24 @@ public class PlayerController implements Initializable {
             @Override
             public void run() {
                 reloadStatus();
+            }
+        });
+        
+        
+        // add Eventlistener for changing CurrentTime
+        mediaView.getMediaPlayer().currentTimeProperty().addListener(new ChangeListener<Duration>() {
+            
+            @Override
+            public void changed(
+                    ObservableValue<? extends Duration> observableValue, 
+                    Duration duration, 
+                    Duration current) {
+                slider.setValue(current.toSeconds());
+                System.out.println("changed:"
+                        + "\n(  observableValue:    " + observableValue
+                        + "\n   duration:           " + duration
+                        + "\n   current:            " + current
+                        + "\n)");
             }
         });
         
